@@ -4,8 +4,8 @@ import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from datetime import datetime
- 
- 
+
+
 def generar_dashboard(gold_path, output_dir='output'):
     """Genera el dashboard HTML desde los datos Gold."""
     with open(gold_path) as f:
@@ -141,7 +141,7 @@ def generar_dashboard(gold_path, output_dir='output'):
         f.write(html)
     print(f'Dashboard generado: {html_path}')
     return html_path
- 
- 
+
+
 if __name__ == '__main__':
     generar_dashboard('output/gold.json')

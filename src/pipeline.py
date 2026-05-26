@@ -6,8 +6,8 @@ IU Digital de Antioquia
 import duckdb
 import json
 import os
- 
- 
+
+
 def ejecutar_pipeline(csv_path, output_dir='output'):
     """Ejecuta el pipeline ETL completo."""
     os.makedirs(output_dir, exist_ok=True)
@@ -131,7 +131,7 @@ def ejecutar_pipeline(csv_path, output_dir='output'):
           f'({total_silver/total_bronze*100:.0f}% validos)')
  
     return gold
- 
- 
+
+
 if __name__ == '__main__':
     ejecutar_pipeline('data/ventas.csv')
