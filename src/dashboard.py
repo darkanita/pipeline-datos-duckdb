@@ -10,10 +10,10 @@ def generar_dashboard(gold_path, output_dir='output'):
     """Genera el dashboard HTML desde los datos Gold."""
     with open(gold_path) as f:
         gold = json.load(f)
- 
+
     resumen = gold['resumen']
     env = gold['ambiente']
- 
+
     # Crear subplots: 2x2
     fig = make_subplots(
         rows=2, cols=2,
@@ -28,7 +28,7 @@ def generar_dashboard(gold_path, output_dir='output'):
             [{'type': 'scatter'}, {'type': 'bar'}]
         ]
     )
- 
+
     # 1. Ventas por ciudad (barras)
     ciudades = gold['ventas_ciudad']
     fig.add_trace(go.Bar(
@@ -37,7 +37,7 @@ def generar_dashboard(gold_path, output_dir='output'):
         marker_color=['#2E75B6', '#1F4E79', '#71A6D2'],
         name='Ventas'
     ), row=1, col=1)
- 
+
     # 2. Ventas por categoria (pie)
     cats = gold['ventas_categoria']
     fig.add_trace(go.Pie(
@@ -45,7 +45,7 @@ def generar_dashboard(gold_path, output_dir='output'):
         values=[c['total_ventas'] for c in cats],
         marker_colors=['#2E75B6', '#E65100'],
     ), row=1, col=2)
- 
+
     # 3. Tendencia mensual (linea)
     meses = gold['ventas_mes']
     fig.add_trace(go.Scatter(
@@ -55,7 +55,7 @@ def generar_dashboard(gold_path, output_dir='output'):
         line=dict(color='#2E75B6', width=3),
         name='Tendencia'
     ), row=2, col=1)
- 
+
     # 4. Top vendedores (barras horizontales)
     vends = gold['top_vendedores']
     fig.add_trace(go.Bar(
@@ -65,16 +65,16 @@ def generar_dashboard(gold_path, output_dir='output'):
         marker_color='#1F4E79',
         name='Vendedores'
     ), row=2, col=2)
- 
+
     fig.update_layout(
         title_text=f'Dashboard de Ventas | Ambiente: {env.upper()}',
         height=700, showlegend=False,
         template='plotly_white'
     )
- 
+
     # Generar HTML completo
     chart_html = fig.to_html(include_plotlyjs='cdn', full_html=False)
- 
+
     ing = resumen['ingresos_totales']
     ticket = resumen['ticket_promedio']
     html = f'''<!DOCTYPE html>
@@ -135,7 +135,7 @@ def generar_dashboard(gold_path, output_dir='output'):
         Pipeline de Datos - IU Digital de Antioquia |
         {datetime.now().strftime('%Y-%m-%d %H:%M')}</div>
 </body></html>'''
- 
+
     html_path = os.path.join(output_dir, 'index.html')
     with open(html_path, 'w') as f:
         f.write(html)
