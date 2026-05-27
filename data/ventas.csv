@@ -1,0 +1,18 @@
+fecha,producto,categoria,cantidad,precio_unitario,ciudad,vendedor
+2026-01-15,Laptop Dell,Tecnologia,3,2500000,Medellin,Ana Torres
+2026-01-15,Mouse Logitech,Tecnologia,10,85000,Bogota,Carlos Ruiz
+2026-01-20,Escritorio,Muebles,2,450000,Cali,Diana Lopez
+2026-01-22,Laptop HP,Tecnologia,5,2800000,Medellin,Ana Torres
+2026-02-01,Silla Ergonomica,Muebles,8,380000,Bogota,Carlos Ruiz
+2026-02-05,Monitor Samsung,Tecnologia,4,1200000,Medellin,Luis Garcia
+2026-02-10,Teclado Mecanico,Tecnologia,15,250000,Cali,Diana Lopez
+2026-02-14,Laptop Lenovo,Tecnologia,2,3200000,Bogota,Ana Torres
+2026-02-20,Lampara LED,Muebles,12,95000,Medellin,Luis Garcia
+2026-03-01,Laptop Dell,Tecnologia,7,2500000,Cali,Carlos Ruiz
+2026-03-05,Webcam HD,Tecnologia,20,180000,Bogota,Diana Lopez
+2026-03-10,Escritorio,Muebles,3,450000,Medellin,Ana Torres
+2026-03-15,Laptop HP,Tecnologia,4,2800000,Cali,Luis Garcia
+2026-03-20,Silla Ergonomica,Muebles,6,380000,Bogota,Carlos Ruiz
+2026-03-25,,Tecnologia,5,150000,Medellin,Ana Torres
+2026-03-28,Monitor Samsung,Tecnologia,-2,1200000,Bogota,Luis Garcia
+2026-03-30,Teclado Mecanico,Tecnologia,0,250000,Cali,Diana Lopez
