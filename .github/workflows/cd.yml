@@ -1,0 +1,73 @@
+name: "CD - Pipeline + Deploy"
+on:
+  push:
+    branches: [dev, qa, main]
+ 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+ 
+jobs:
+  # === DEPLOY DEV ===
+  pipeline-dev:
+    name: "Pipeline Development"
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment: { name: development }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - name: Ejecutar pipeline
+        env: { APP_ENV: development }
+        run: |
+          python src/pipeline.py
+          echo "=== Pipeline DEV completado ==="
+ 
+  # === DEPLOY QA ===
+  pipeline-qa:
+    name: "Pipeline QA"
+    if: github.ref == 'refs/heads/qa'
+    runs-on: ubuntu-latest
+    environment: { name: qa }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - name: Ejecutar pipeline + validacion
+        env: { APP_ENV: qa }
+        run: |
+          python src/pipeline.py
+          python src/dashboard.py
+          echo "=== Pipeline QA + Dashboard generado ==="
+ 
+  # === DEPLOY PRODUCTION (GitHub Pages) ===
+  pipeline-prod:
+    name: "Pipeline Production"
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - name: Ejecutar pipeline completo
+        env: { APP_ENV: production }
+        run: |
+          python src/pipeline.py
+          python src/dashboard.py
+          echo "=== Pipeline PRODUCTION completado ==="
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
+        with: { path: output }
+      - name: Deploy a GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

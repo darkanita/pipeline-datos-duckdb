@@ -1,0 +1,21 @@
+name: "CI - Validacion"
+on:
+  pull_request:
+    branches: [dev, qa, main]
+jobs:
+  ci:
+    name: "Lint + Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - name: Lint
+        run: flake8 src/ --max-line-length=100
+      - name: Tests
+        run: pytest tests/ -v
+      - name: Pipeline de prueba
+        run: |
+          python src/pipeline.py
+          echo "Pipeline ejecutado correctamente en CI"
